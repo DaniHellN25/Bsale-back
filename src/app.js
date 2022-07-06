@@ -21,8 +21,7 @@ server.use((req, res, next) => {
   next();
 });
 
-server.use("/stock", routes);
-server.get("/", (req, res) => res.send("<h1>Welcome</h1>"));
+server.use("/", routes);
 
 // Error catching endware.
 server.use((err, req, res, next) => {

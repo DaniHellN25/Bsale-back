@@ -1,10 +1,10 @@
 const { Router } = require("express");
-//trae las funciones
+const {getAll, getByCategory, getByName, orderByName} = require('../controllers/productsControllers')
 const productsRouter = Router();
 
 productsRouter.get("/", getAll);
 productsRouter.get("/:categoryId", getByCategory);
-productsRouter.get("/", getByName);
-productsRouter.get("/", orderByName);
+productsRouter.post("/", getByName);
+productsRouter.get("/order/name", orderByName);
 
 module.exports = productsRouter;

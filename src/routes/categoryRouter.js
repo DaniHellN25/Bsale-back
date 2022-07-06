@@ -1,5 +1,5 @@
 const { Router } = require("express");
-//trae las funciones
+const { getAll } = require("../controllers/categoryControllers");
 const categoryRouter = Router();
 
 categoryRouter.get("/", getAll);
