@@ -1,5 +1,5 @@
 const mysql = require("../db");
-
+//Buscamos y mandamos todas las categorías al front
 const getAll = async (req, res, next) => {
   try {
     mysql.query("SELECT * FROM category", (error, response) => {
