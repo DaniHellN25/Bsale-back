@@ -10,7 +10,12 @@ server.use(cors());
 server.use(express.json());
 server.use(morgan("dev"));
 server.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://bsale-store-d.vercel.app"); /*Solo se aceptan peticiones de parte de nuestro cliente*/
+  const allowedOrigins = ['http://127.0.0.1:5500', 'https://bsale-store-d.vercel.app'];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+       res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  // res.header("Access-Control-Allow-Origin", "https://bsale-store-d.vercel.app"); /*Solo se aceptan peticiones de parte de nuestro cliente*/
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",
