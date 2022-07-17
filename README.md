@@ -23,34 +23,56 @@
 
 Para la construcción del back se utilizó NodeJS y el Framework Express
 
+Esta API esta destinada para el uso exclusivo de nuestro cliente BSale Store y sus desarrolladores para poder consultar las categorías y 
+
+productos existentes a la venta y poder desarrollar y diseñar la parte del [Frontend](https://github.com/DaniHellN25/Bsale-Front) y UX/UI .
+
+Para realizar pruebas mediante una sesión local se hizo uso del Middleware "validateHeader". El cual valida que el header origin sea el correcto
+
+(de acuerdo al dominio del cliente) o que la propiedad **host** del objeto **header** corresponda al puerto **localhost:3001** o al dominio que 
+
+corresponda al deploy del back. En el archivo **app.js** se hizo uso de una **whitelist** para permitir peticiones mediante **live server** y 
+
+de el dominio del cliente. 
+
+La estructura de los JSON que se recibirá en cada endpoint se describirá más adelante; en cada caso se responde con un **array de objetos**. 
+
+Las consultas a la base de datos están protegidas de inyección SQL mediante placeholders y validación de inputs cuando es necesario (de acuerdo 
+
+a la documentación del driver "mysql)". También se crea una connection pool para mejorar el tiempo de respuesta de nuestra app.
+
+Para conocer las categorías disponibles y por filtrar de acuerdo a la que sea necesaria primero deberá hacer un pedido a la ruta [endpoint de categorías](#get-httpsbsale-store-dherokuappcomcategories) para conocer las categorías disponibles y su ID(que será el valor del param necesario para [filtrar por categorías](#get-httpsbsale-store-dherokuappcomproductsid))
+
+---
+
 
 ## **GET**
 
-### Todos los productos        
+### [Todos los productos](#get-httpsbsale-store-dherokuappcomproducts)        
 
 <li>https://bsale-store-d.herokuapp.com/products</li>
 
 ---
 
-### Categorías existentes
+### [Categorías existentes](#get-httpsbsale-store-dherokuappcomcategories)
 
 <li>https://bsale-store-d.herokuapp.com/categories</li>
 
 ---
 
-### Productos por categoría
+### [Productos por categoría](#get-httpsbsale-store-dherokuappcomproductsid)
 
 <li>https://bsale-store-d.herokuapp.com/products/:id</li>
 
 ---
 
-### Productos ordenados por nombre de la A-Z
+### [Productos ordenados por nombre de la A-Z](#get-httpsbsale-store-dherokuappcomproductsordernameoptionasc)
 
 <li>https://bsale-store-d.herokuapp.com/products/order/name?option=ASC</li>
 
 ---
 
-### Productos ordenados por nombre de la Z-A
+### [Productos ordenados por nombre de la Z-A](#get-httpsbsale-store-dherokuappcomproductsordernameoptiondesc)
 
 <li>https://bsale-store-d.herokuapp.com/products/order/name?option=DESC</li>
 
@@ -59,7 +81,7 @@ Para la construcción del back se utilizó NodeJS y el Framework Express
 
 ## **POST** 
 
-### Buscar productos por nombre(exacto o parcial)
+### [Buscar productos por nombre(exacto o parcial)](#post-httpsbsale-store-dherokuappcomproducts)
 
 <li>https://bsale-store-d.herokuapp.com/products</li>
  
@@ -74,7 +96,7 @@ Para la construcción del back se utilizó NodeJS y el Framework Express
 
 ## **GET** https://bsale-store-d.herokuapp.com/products
 
-#### Al hacer un pedido en este endpoint la respuesta será un JSON con los siguientes datos(los items estarán ordenados de acuerdo al id de su categoría que va del 1 al 7):
+#### Al hacer un pedido en este endpoint la respuesta será un JSON con todos los productos disponibles en la DB con los siguientes datos(los items estarán ordenados de acuerdo al id de su categoría que va del 1 al 7):
 
 <li> id : número identificador del producto(int)</li>
 
@@ -130,9 +152,9 @@ Para la construcción del back se utilizó NodeJS y el Framework Express
 
 ### Al hacer un pedido en este endpoint la respuesta será un JSON de las categorías con los siguientes datos: 
 
-<li>id(int)</li>
+<li> id : número identificador de la categoría(int)</li>
 
-<li>name(string)</li>
+<li> name : nombre de la categoría(string)</li>
 
 
 ### Respuesta:
@@ -323,11 +345,11 @@ Para la construcción del back se utilizó NodeJS y el Framework Express
 
 ## **POST** https://bsale-store-d.herokuapp.com/products
 
-### Al realizar una petición post y mandar por body un JSON con la siguiente estructura:
+### Al realizar una petición post y mandar por body un JSON con la siguiente estructura(tomando como ejemplo que se quiera buscar un producto "Sprite"):
 
 ```
  {
-    "name": "<value>"
+    "name": "Sprite"
  }   
 ```
 ### Se obtendrá una respuesta con los productos que coincidan con la búsqueda (Ya sea que los caracteres se incluyan en el nombre de uno o más productos en el mismo orden o se escriba el nombre exacto del producto)
