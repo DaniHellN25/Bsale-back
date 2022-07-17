@@ -195,8 +195,9 @@ Para conocer las categorías disponibles y por filtrar de acuerdo a la que sea n
 
 ## **GET** https://bsale-store-d.herokuapp.com/products/:id
 
-### Al agregar el param "id" se filtrarán los productos de acuerdo al id de la categoría.
+### Al agregar el param "id" se filtrarán los productos de acuerdo al id de la categoría(únicamente se aceptan números del 1 al 7; [véase endpoint de categorías](#get-httpsbsale-store-dherokuappcomcategories)).
 
+### Ejemplo de petición: https://bsale-store-d.herokuapp.com/products/1
 
 ### Respuesta:
 ```
